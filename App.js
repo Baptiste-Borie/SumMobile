@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, TextInput, StyleSheet, Text, View, Alert } from "react-native";
 import Timer from "./Timer";
 
@@ -51,10 +51,13 @@ export default function App() {
     }
   };
 
+  useEffect(() => {
+    resetGame();
+  }, [difficulty]);
+
   const changeDifficulty = (newDifficulty) => {
     setDifficulty(newDifficulty);
     setHardLevel(1);
-    resetGame();
   };
 
   return (
@@ -81,9 +84,11 @@ export default function App() {
         <View style={styles.button}>
           <Button title="Valider" onPress={compareInput} />
         </View>
-        <View style={styles.button}>
-          <Button title="Recommencer" onPress={resetGame} />
-        </View>
+        {difficulty !== "hard" && (
+          <View style={styles.button}>
+            <Button title="Recommencer" onPress={resetGame} />
+          </View>
+        )}
       </View>
 
       <View style={styles.buttonContainer}>
